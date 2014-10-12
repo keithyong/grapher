@@ -1,50 +1,65 @@
-import pygame
-import math
+#http://interactivepython.org/courselib/static/pythonds/Graphs/graphintro.html
+#http://interactivepython.org/courselib/static/pythonds/Graphs/graphintro.html
+class Vertex:
+    # Initialize a vertex that has
+    # a dictionary 'connectedTo'
+    def __init__(self, key):
+        self.id = key
+        self.connectedTo = {}
 
-pygame.init()
+    # Adds a neighbor vertex 'nbr' to this vertex
+    def addNeighbor(self, nbr, weight = 0):
+        self.connectedTo[nbr] = weight
 
-SCREEN_X = 500
-SCREEN_Y = 500
-ZOOM = 20
-VERTEX_RADIUS = int(ZOOM / 7)
-MIDDLE_Y = int((SCREEN_Y / ZOOM) / 2)
+    # Returns a string representation of vertex
+    def __str__(self):
+        return str(self.id) + ' connectedTo: ' + str([x.id for x in self.connectedTo])
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
+    # Returns all vertices in the adjacency list
+    def getConnections(self):
+        return self.connectedTo.keys()
+        
+    def getId(self):
+        return self.id
 
-graph_line_color = (100, 100, 100)
+    def getWeight(self, nbr):
+        return self.connectedTo[nbr]
 
-size = [500, 500]
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Grapher - Simple Graph Theory by Keith Yong")
 
-done = False
-clock = pygame.time.Clock()
 
-def drange(start, stop, step):
-    while start < stop:
-        yield start
-        start += step
+class Graph:
+    def __init__(self):
+        self.vertList = {}
+        self.numVertices = 0
 
-screen.fill(WHITE)
-for i in  drange(0, SCREEN_X, ZOOM):
-    pygame.draw.aaline(screen, graph_line_color, [i, 0], [i, SCREEN_Y], True)
 
-for i in drange(0, SCREEN_Y, ZOOM):
-    pygame.draw.aaline(screen, graph_line_color, [0, i], [SCREEN_X, i], True)
+    def addVertex(self, key):
+        self.numVertices = self.numVertices + 1
+        newVertex = Vertex(key)
+        self.vertList[key] = newVertex
+        return newVertex
 
-pygame.display.flip()
+    def getVertex(self, n):
+        if n in self.vertList:
+            return self.vertList[n]
+        else:
+            return None
 
-vertex_x = 0
-vertex_y = 0
-while not done:
-    lastVertex_x = vertex_x
-    lastVertex_y = vertex_y
-    vertex_x = ZOOM * int(input("What is x: "))
-    vertex_y = ZOOM * int(input("What is y: ")) + (MIDDLE_Y * ZOOM)
-    pygame.draw.circle(screen, RED, (vertex_x, vertex_y), VERTEX_RADIUS)
-    pygame.draw.aaline(screen, BLACK, [lastVertex_x, lastVertex_y], [vertex_x, vertex_y], True)
-    pygame.display.flip()
-    clock.tick(10)
+    def __contains__(self, n):
+        return n in self.vertList
 
+    # Adds an edge between two vertices f and t. If f and/or t is not in
+    # self.vertList
+    def addEdge(self, f, t, cost = 0):
+        if f not in self.vertList:
+            nv = self.addVertex(f)
+        if t not in self.vertList:
+            nv = self.addVertex(t)
+        self.vertList[f].addNeighbor(self.vertList[t], cost)
+
+    # Get all vertices in this graph object's vertList
+    def getVertices(self):
+        return self.vertList.keys()
+
+    def __iter__(self):
+        return iter(self.vertList.values())
