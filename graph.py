@@ -1,5 +1,6 @@
 #http://interactivepython.org/courselib/static/pythonds/Graphs/graphintro.html
-#http://interactivepython.org/courselib/static/pythonds/Graphs/graphintro.html
+#Adjacency List for Grapher.py
+
 class Vertex:
     # Initialize a vertex that has
     # a dictionary 'connectedTo'
@@ -63,6 +64,9 @@ class Graph:
 
     def getVertList(self):
         return self.vertList
+
+    def getNumVertices(self):
+        return self.numVertices
 
     def __iter__(self):
         return iter(self.vertList.values())
