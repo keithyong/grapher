@@ -61,5 +61,8 @@ class Graph:
     def getVertices(self):
         return self.vertList.keys()
 
+    def getVertList(self):
+        return self.vertList
+
     def __iter__(self):
         return iter(self.vertList.values())
