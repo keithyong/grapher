@@ -5,7 +5,9 @@ pygame.init()
 
 SCREEN_X = 500
 SCREEN_Y = 500
-ZOOM = 52
+ZOOM = 20
+VERTEX_RADIUS = int(ZOOM / 7)
+MIDDLE_Y = int((SCREEN_Y / ZOOM) / 2)
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -34,10 +36,15 @@ for i in drange(0, SCREEN_Y, ZOOM):
 
 pygame.display.flip()
 
+vertex_x = 0
+vertex_y = 0
 while not done:
+    lastVertex_x = vertex_x
+    lastVertex_y = vertex_y
     vertex_x = ZOOM * int(input("What is x: "))
-    vertex_y = ZOOM * int(input("What is y: "))
-    pygame.draw.circle(screen, RED, (vertex_x, vertex_y), 5)
+    vertex_y = ZOOM * int(input("What is y: ")) + (MIDDLE_Y * ZOOM)
+    pygame.draw.circle(screen, RED, (vertex_x, vertex_y), VERTEX_RADIUS)
+    pygame.draw.aaline(screen, BLACK, [lastVertex_x, lastVertex_y], [vertex_x, vertex_y], True)
     pygame.display.flip()
     clock.tick(10)
 
