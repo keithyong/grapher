@@ -6,8 +6,8 @@ import helpers
 
 pygame.init()
 
-SCREEN_X = 500
-SCREEN_Y = 500
+SCREEN_X = 800
+SCREEN_Y = 800
 ZOOM = 40
 VERTEX_RADIUS = int(ZOOM / 7)
 MIDDLE_Y = int((SCREEN_Y / ZOOM) / 2)
@@ -16,7 +16,7 @@ VERTEX_COLOR = (247, 72, 59)
 BACKGROUND_COLOR = (255, 255, 255)
 GRAPH_LINE_COLOR = (196, 196, 196)
 
-size = [500, 500]
+size = [SCREEN_X, SCREEN_Y]
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Grapher - SimpleSimple Graph Theory by Keith Yong")
 

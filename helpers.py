@@ -31,7 +31,6 @@ def getPolygonVertexCoord(radius, n, sides, center):
     yCoord = radius * math.sin(2 * math.pi * n/sides)
     xCoord = int(xCoord + center[0])
     yCoord = int(yCoord + center[1])
-    print((xCoord, yCoord))
     return (xCoord, yCoord)
 
 def drawGraph(scr, gr, zoom, color, scrX, scrY):
@@ -39,6 +38,8 @@ def drawGraph(scr, gr, zoom, color, scrX, scrY):
     count = 0
     centerCoord = (scrX / 2, scrY / 2)
     radiusOfPolygon = scrX / 2.5
+    vertexCoordDict = {}    # Planning on using this for edge coordinates
+
     for key in gr.getVertices():
         coord = getPolygonVertexCoord(radiusOfPolygon, count, gr.getNumVertices(), centerCoord)
         pygame.draw.circle(scr, color, (coord), radius)
